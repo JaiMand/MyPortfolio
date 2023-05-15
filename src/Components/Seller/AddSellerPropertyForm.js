@@ -31,11 +31,10 @@ export const SellerpropertyInputForm = () => {
             "address": addressRef.current.value,
             "postcode": postcodeRef.current.value,
             "type": typeRef.current.value,
-            "price": priceRef.current.value,
-            "bedroom": bedroomRef.current.value,
-            "bathroom": bathroomRef.current.value,
+            "price": parseInt(priceRef.current.value),
+            "bedrooms": parseInt(bedroomRef.current.value),
+            "bathrooms": parseInt(bathroomRef.current.value),
             "garden": gardenRef.current.value,
-            "sellerId": parseInt(sellerId),
             "status": "FOR SALE"
         }
 
@@ -48,9 +47,9 @@ export const SellerpropertyInputForm = () => {
         if (!newSeller.price) { setErrorMessage_price('Please fill in price.'); }
         else { setErrorMessage_price('') }
         /* validate as numeric and nor string */
-        if (newSeller.bedroom === "select") { setErrorMessage_bedroom('Please select number of bedrooms.'); }
+        if (newSeller.bedrooms === "select") { setErrorMessage_bedroom('Please select number of bedrooms.'); }
         else { setErrorMessage_bedroom('') }
-        if (newSeller.bathroom === "select") { setErrorMessage_bathroom('Please select number of bathrooms.'); }
+        if (newSeller.bathrooms === "select") { setErrorMessage_bathroom('Please select number of bathrooms.'); }
         else { setErrorMessage_bathroom('') }
         if (newSeller.garden === "select") { setErrorMessage_garden('Please select wheather you have a garden.'); }
         else { setErrorMessage_garden('') }
@@ -60,11 +59,14 @@ export const SellerpropertyInputForm = () => {
             newSeller.postcode &&
             newSeller.type !== 'select' &&
             newSeller.price &&
-            newSeller.bedroom !== 'select' &&
-            newSeller.bathroom !== 'select' &&
+            newSeller.bedrooms !== 'select' &&
+            newSeller.bathrooms !== 'select' &&
             newSeller.garden !== 'select'
         ) {
-            fetch('http://localhost:8000/property', {
+            newSeller.sellers = {
+                id: sellerId
+            }
+            fetch('http://localhost:8080/property/add', {
                 method: "POST",
                 headers: { "content-Type": "application/json" },
                 body: JSON.stringify(newSeller)

@@ -2,7 +2,6 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-
 import '../../style.css';
 
 function Seller() {
@@ -11,29 +10,37 @@ function Seller() {
     const [records, setRecords] = useState([])
 
     function getData() {
-        fetch('http://localhost:8000/seller')
+        fetch('http://localhost:8080/seller/read')
             .then((response) => response.json()
                 .then((data) => setRecords(data)))
     }
 
     useEffect(() => { getData() }, [])
 
-    function removeRecord(recno) {
-        fetch(`http://localhost:8000/seller/${recno}`, { method: 'DELETE' })
-            .then((response) => {
-                if (response.ok) {
-                    let temprecords = records.filter(recs => recs.id !== recno)
+    function removeRecord(rec) {
+        let choice = window.confirm(`Are you sure you want to delete ${rec.first_name} record. This will also delete all properties registered to ${rec.first_name}!!!`)
+        let temprecords = records.filter(recs => recs.id !== rec.id)
+        if (choice) {
+            setRecords(temprecords)
+            fetch(`http://localhost:8080/seller/delete/${rec.id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json', } })
+                .then(response => {
+                    if (response.ok) { return response.json(); }
+                    else { throw new Error(`Failed to delete record with ID ${rec.id}.`); }
+                })
+                .then(deletedData => {
+                    console.log(`Record with ID ${rec.id} deleted successfully!`, deletedData);
+                    let temprecords = records.filter(recs => recs.id !== rec.id);
                     setRecords(temprecords);
-                }
-                else {
-                    console.error('Error dleting record:', response.status);
-                }
-            })
-            .catch(error => { console.error('Error deleting record', error) });
+                })
+                /* .then(data => getData()) */
+                .catch(error => { console.error(`Error deleting record with ID ${rec.id}.`, error); });
+        }
+        else {/* Do nothing if the user cancels the deletion */ }
     }
 
+
     function sellerProperty(seller) {
-        const url = `/Seller/ManageSellerProperty/${seller.id}/${seller.firstName}/${seller.surname}`
+        const url = `/Seller/ManageSellerProperty/${seller.id}/${seller.first_name}/${seller.surname}`
         navigate(url)
     }
 
@@ -56,13 +63,13 @@ function Seller() {
                     <th>  </th>
                 </tr>
                 {records.map(rec => <tr class="tr1">
-                    <td> {rec.firstName}  </td>
+                    <td> {rec.first_name}  </td>
                     <td> {rec.surname}  </td>
                     <td> {rec.address}  </td>
                     <td> {rec.postcode}  </td>
-                    <td> {rec.phone}  </td>
+                    <td> {rec.phone_number}  </td>
                     <td><button className='btn btn-light' onClick={() => sellerProperty(rec)}>Manage</button></td>
-                    <td><input className="btn_delete" type="button" value="Remove" onClick={() => removeRecord(rec.id)} /></td>
+                    <td><input className="btn_delete" type="button" value="Remove" onClick={() => removeRecord(rec)} /></td>
                 </tr>
                 )
                 }

@@ -13,25 +13,35 @@ function ManagePropertyData(Person) {
     const [records, setRecords] = useState([])
 
     function getData() {
-        fetch('http://localhost:8000/property')
+        fetch('http://localhost:8080/property/read')
             .then((response) => response.json()
-                .then((data) => setRecords(data)))
+                .then((data) => {
+                    console.log(data)
+                    setRecords(data)
+                }))
     }
 
     useEffect(() => { getData() }, [])
 
-    function removeRecord(recno) {
-        fetch(`http://localhost:8000/property/${recno}`, { method: 'DELETE' })
-            .then((response) => {
-                if (response.ok) {
-                    let temprecords = records.filter(recs => recs.id !== recno)
+    function removeRecord(rec) {
+        let choice = window.confirm(`Are you sure you want to delete property ${rec.address} record. This will also delete this properties from ${rec.first_name} records!`)
+        let temprecords = records.filter(recs => recs.id !== rec.id)
+        if (choice) {
+            setRecords(temprecords)
+            fetch(`http://localhost:8080/property/delete/${rec.id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json', } })
+                .then(response => {
+                    if (response.ok) { return response.json(); }
+                    else { throw new Error(`Failed to delete record with ID ${rec.id}.`); }
+                })
+                .then(deletedData => {
+                    console.log(`Record with ID ${rec.id} deleted successfully!`, deletedData);
+                    let temprecords = records.filter(recs => recs.id !== rec.id);
                     setRecords(temprecords);
-                }
-                else {
-                    console.error('Error dleting record:', response.status);
-                }
-            })
-            .catch(error => { console.error('Error deleting record', error) });
+                })
+                /* .then(data => getData()) */
+                .catch(error => { console.error(`Error deleting record with ID ${rec.id}.`, error); });
+        }
+        else {/* Do nothing if the user cancels the deletion */ }
     }
 
     function sellerPropertyForm() {
@@ -40,7 +50,7 @@ function ManagePropertyData(Person) {
     }
 
     function withdrawRecord(recno, newstatus) {
-        fetch(`http://localhost:8000/property/${recno}`, {
+        fetch(`http://localhost:8080/property/change/${recno}`, {
             method: 'PATCH',
             headers: { "content-Type": "application/json" },
             body: JSON.stringify({
@@ -57,7 +67,7 @@ function ManagePropertyData(Person) {
     }
 
     // eslint-disable-next-line eqeqeq
-    let filteredRecord = records.filter(rec => rec.sellerId == sellerId)
+    // let filteredRecord = records.filter(rec => rec.id == sellerId)
 
     return (
         <>
@@ -85,24 +95,23 @@ function ManagePropertyData(Person) {
                     <th>  </th>
                 </tr>
 
-
-                {filteredRecord.map(data => <tr class="tr1">
-                    <td> {data.sellerId} </td>
-                    <td> {data.address} </td>
-                    <td> {data.postcode} </td>
-                    <td> {data.type} </td>
-                    <td> {data.price} </td>
-                    <td> {data.bedroom} </td>
-                    <td> {data.bathroom} </td>
-                    {data.garden == "true" ? (<td>Yes</td>) : (<td>No</td>)}
-                    <td> {data.status} </td>
-                    <td> {data.id} </td>
-                    {data.status != 'SOLD' ?
-                        (data.status == "FOR SALE" ?
-                            (<td><button className="btn btn-light" onClick={() => withdrawRecord(data.id, "Withdraw")}>Withdraw</button></td>)
-                            : (<td><button className="btn btn-light" onClick={() => withdrawRecord(data.id, "FOR SALE")}>Resubmit</button></td>))
+                {records.filter(record => parseInt(sellerId) === parseInt(record.sellers.id)).map(rec => <tr class="tr1">
+                    <td> {rec.sellers.id} </td>
+                    <td> {rec.address} </td>
+                    <td> {rec.postcode} </td>
+                    <td> {rec.type} </td>
+                    <td> {rec.price} </td>
+                    <td> {rec.bedrooms} </td>
+                    <td> {rec.bathrooms} </td>
+                    {rec.garden == "true" ? (<td>Yes</td>) : (<td>No</td>)}
+                    <td> {rec.status} </td>
+                    <td> {rec.id} </td>
+                    {rec.status != 'SOLD' ?
+                        (rec.status == "FOR SALE" ?
+                            (<td><button className="btn btn-light" onClick={() => withdrawRecord(rec.id, "WITHDRAW")}>Withdraw</button></td>)
+                            : (<td><button className="btn btn-light" onClick={() => withdrawRecord(rec.id, "FOR SALE")}>Resubmit</button></td>))
                         : (<td></td>)}
-                    < td > <input className="btn_delete" type="button" value="Remove" onClick={() => removeRecord(data.id)} /></td>
+                    < td > <input className="btn_delete" type="button" value="Remove" onClick={() => removeRecord(rec)} /></td>
                 </tr>
 
                 )}

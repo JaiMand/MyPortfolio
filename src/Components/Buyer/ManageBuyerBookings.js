@@ -9,26 +9,26 @@ function ManageBuyerBooking() {
 
 
     function getData() {
-        fetch('http://localhost:8000/booking')
+        fetch('http://localhost:8080/booking/read')
             .then((response) => response.json()
                 .then((data) => {
                     let filteredRecord1 = data.filter(rec => rec.buyerId == buyerId)
                     //alert("buyer" + buyerId)
                     setRecords(filteredRecord1)
                 }))
-        fetch('http://localhost:8000/booking')
+        fetch('http://localhost:8080/booking/read')
             .then((response) => response.json()
                 .then((data) => {
                     let filteredRecord1 = data.filter(rec => rec.buyerId == buyerId)
                     //alert("buyer" + buyerId)
                     setRecords(filteredRecord1)
-                }))l-
+                }))
     }
 
     useEffect(() => { getData() }, [])
 
     function removeRecord(recno) {
-        fetch(`http://localhost:8000/booking/${recno}`, { method: 'DELETE' })
+        fetch(`http://localhost:8080/booking/${recno}`, { method: 'DELETE' })
             .then((response) => {
                 if (response.ok) {
                     let temprecords = records.filter(recs => recs.id !== recno)
