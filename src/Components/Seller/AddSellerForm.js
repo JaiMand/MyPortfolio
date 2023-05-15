@@ -8,26 +8,26 @@ export const SellerInputForm = () => {
     const surnameRef = useRef();
     const addressRef = useRef();
     const postcodeRef = useRef();
-    const phoneRef = useRef();
+    const phoneNumberRef = useRef();
 
     let [errorMessage_firstName, setErrorMessage_firstName] = useState('');
     let [errorMessage_surname, setErrorMessage_surname] = useState('');
     let [errorMessage_address, setErrorMessage_address] = useState('');
     let [errorMessage_postcode, setErrorMessage_postcode] = useState('');
-    let [errorMessage_phone, setErrorMessage_phone] = useState('');
+    let [errorMessage_phoneNumber, setErrorMessage_phoneNumber] = useState('');
 
     const navigate = useNavigate()
 
     function validateAndSave() {
         const newSeller = {
-            "firstName": firstNameRef.current.value,
+            "first_name": firstNameRef.current.value,
             "surname": surnameRef.current.value,
             "address": addressRef.current.value,
             "postcode": postcodeRef.current.value,
-            "phone": phoneRef.current.value,
+            "phone_number": phoneNumberRef.current.value,
         }
 
-        if (!newSeller.firstName) { setErrorMessage_firstName('Please fill in First Name.'); }
+        if (!newSeller.first_name) { setErrorMessage_firstName('Please fill in First Name.'); }
         else { setErrorMessage_firstName('') }
         if (!newSeller.surname) { setErrorMessage_surname('Please fill in Surname.'); }
         else { setErrorMessage_surname('') }
@@ -35,29 +35,37 @@ export const SellerInputForm = () => {
         else { setErrorMessage_address('') }
         if (!newSeller.postcode) { setErrorMessage_postcode('Please fill in Postcode.'); }
         else { setErrorMessage_postcode('') }
-        if (!newSeller.phone) { setErrorMessage_phone('Please fill in Phone Number.'); }
-        else { setErrorMessage_phone('') }
+        if (!newSeller.phone_number) { setErrorMessage_phoneNumber('Please fill in Phone Number.'); }
+        else { setErrorMessage_phoneNumber('') }
 
         if (
-            newSeller.firstName &&
+            newSeller.first_name &&
             newSeller.surname &&
             newSeller.address &&
             newSeller.postcode &&
-            newSeller.phone
+            newSeller.phone_number
         ) {
-            fetch('http://localhost:8000/seller', {
+            fetch('http://localhost:8080/seller/add', {
                 method: "POST",
                 headers: { "content-Type": "application/json" },
                 body: JSON.stringify(newSeller)
             })
                 .then((response) => {
-                    navigate("/Seller/SellerProperty")
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw new Error(`Server returned status code ${response.status}`);
+                    }
+                })
+                .then((data) => {
+                    navigate("/Seller/SellerProperty");
                 })
                 .catch(error => {
                     console.error('Error saving seller:', error);
                 });
         }
     }
+
     return (
         <>
             <h1> Add Seller Form </h1>
@@ -89,9 +97,9 @@ export const SellerInputForm = () => {
                 </small><br />
 
                 <label class="col-sm-3 col-form-label"> Phone: </label>
-                <input ref={phoneRef} type='text' placeholder='Phone' />
+                <input ref={phoneNumberRef} type='text' placeholder='Phone' />
                 <small id="passwordHelp" class="text-danger">
-                    {errorMessage_phone && <div className="form-group has-warning">{errorMessage_phone}</div>}
+                    {errorMessage_phoneNumber && <div className="form-group has-warning">{errorMessage_phoneNumber}</div>}
                 </small><br />
                 <br />
 
