@@ -9,14 +9,14 @@ function ManageBuyerBooking() {
 
 
     function getData() {
-        fetch('http://localhost:8080/booking/read')
+        fetch('http://18.202.34.215:8080/booking/read')
             .then((response) => response.json()
                 .then((data) => {
                     let filteredRecord1 = data.filter(rec => rec.buyerId == buyerId)
                     //alert("buyer" + buyerId)
                     setRecords(filteredRecord1)
                 }))
-        fetch('http://localhost:8080/booking/read')
+        fetch('http://18.202.34.215:8080/booking/read')
             .then((response) => response.json()
                 .then((data) => {
                     let filteredRecord1 = data.filter(rec => rec.buyerId == buyerId)
@@ -28,7 +28,7 @@ function ManageBuyerBooking() {
     useEffect(() => { getData() }, [])
 
     function removeRecord(recno) {
-        fetch(`http://localhost:8080/booking/${recno}`, { method: 'DELETE' })
+        fetch(`http://18.202.34.215:8080/booking/${recno}`, { method: 'DELETE' })
             .then((response) => {
                 if (response.ok) {
                     let temprecords = records.filter(recs => recs.id !== recno)

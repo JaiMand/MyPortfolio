@@ -10,7 +10,7 @@ function Buyer() {
     const [records, setRecords] = useState([])
 
     function getData() {
-        fetch('http://localhost:8080/buyer/read')
+        fetch('http://18.202.34.215:8080/buyer/read')
             .then((response) => response.json()
                 .then((data) => setRecords(data)))
     }
@@ -22,7 +22,7 @@ function Buyer() {
         let temprecords = records.filter(recs => recs.id !== rec)
         if (choice) {
             setRecords(temprecords)
-            fetch(`http://localhost:8080/buyer/delete/${rec}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json', } })
+            fetch(`http://18.202.34.215:8080/buyer/delete/${rec}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json', } })
                 .then(response => {
                     if (response.ok) { return response.json(); }
                     else { throw new Error(`Failed to delete record with ID ${rec}.`); }

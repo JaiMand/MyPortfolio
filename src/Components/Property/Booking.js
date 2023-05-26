@@ -9,7 +9,7 @@ function Book() {
     const dateTime = useRef();
 
     function getData() {
-        fetch('http://localhost:8080/buyer/read')
+        fetch('http://18.202.34.215:8080/buyer/read')
             .then((response) => response.json()
                 .then((data) => setRecords(data)))
     }

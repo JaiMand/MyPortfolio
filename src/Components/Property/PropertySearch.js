@@ -20,12 +20,12 @@ function PropertySearch() {
     const buyerName = useRef();
 
     function getData() {
-        fetch('http://localhost:8080/property/read')
+        fetch('http://18.202.34.215:8080/property/read')
             .then((response) => response.json())
             .then((data) => {
                 setRecords(data.filter(data => data.status == 'FOR SALE'));
             });
-        fetch('http://localhost:8080/buyer/read')
+        fetch('http://18.202.34.215:8080/buyer/read')
             .then((response) => response.json()
                 .then((buyerData) => setBuyerRecords(buyerData)))
     }
@@ -33,7 +33,7 @@ function PropertySearch() {
     useEffect(() => { getData() }, [])
 
     function handleSearch() {
-        fetch('http://localhost:8080/property/read')
+        fetch('http://18.202.34.215:8080/property/read')
             .then((response) => response.json())
             .then((data) => {
                 setRecords(data.filter(data => /* data.status == 'FOR SALE'));
