@@ -13,7 +13,7 @@ function ManagePropertyData(Person) {
     const [records, setRecords] = useState([])
 
     function getData() {
-        fetch('http://localhost:8080/property/read')
+        fetch('http://18.202.34.215:8080/property/read')
             .then((response) => response.json()
                 .then((data) => {
                     console.log(data)
@@ -28,7 +28,7 @@ function ManagePropertyData(Person) {
         let temprecords = records.filter(recs => recs.id !== rec.id)
         if (choice) {
             setRecords(temprecords)
-            fetch(`http://localhost:8080/property/delete/${rec.id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json', } })
+            fetch(`http://18.202.34.215:8080/property/delete/${rec.id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json', } })
                 .then(response => {
                     if (response.ok) { return response.json(); }
                     else { throw new Error(`Failed to delete record with ID ${rec.id}.`); }
@@ -50,7 +50,7 @@ function ManagePropertyData(Person) {
     }
 
     function withdrawRecord(recno, newstatus) {
-        fetch(`http://localhost:8080/property/change/${recno}`, {
+        fetch(`http://18.202.34.215:8080/property/change/${recno}`, {
             method: 'PATCH',
             headers: { "content-Type": "application/json" },
             body: JSON.stringify({

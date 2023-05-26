@@ -66,7 +66,7 @@ export const SellerpropertyInputForm = () => {
             newSeller.sellers = {
                 id: sellerId
             }
-            fetch('http://localhost:8080/property/add', {
+            fetch('http://18.202.34.215:8080/property/add', {
                 method: "POST",
                 headers: { "content-Type": "application/json" },
                 body: JSON.stringify(newSeller)
