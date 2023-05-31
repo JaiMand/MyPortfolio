@@ -19,21 +19,21 @@ function Buyer() {
 
     function removeRecord(rec) {
         let choice = window.confirm(`Are you sure you want to delete ${rec.first_name} record`)
-        let temprecords = records.filter(recs => recs.id !== rec)
+        let temprecords = records.filter(recs => recs.id !== rec.id)
         if (choice) {
             setRecords(temprecords)
-            fetch(`http://18.202.34.215:8080/buyer/delete/${rec}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json', } })
+            fetch(`http://18.202.34.215:8080/buyer/delete/${rec.id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json', } })
                 .then(response => {
                     if (response.ok) { return response.json(); }
-                    else { throw new Error(`Failed to delete record with ID ${rec}.`); }
+                    else { throw new Error(`Failed to delete record with ID ${rec.id}.`); }
                 })
                 .then(deletedData => {
                     console.log(`Record with ID ${rec} deleted successfully!`, deletedData);
-                    let temprecords = records.filter(recs => recs.id !== rec);
+                    let temprecords = records.filter(recs => recs.id !== rec.id);
                     setRecords(temprecords);
                 })
                 /* .then(data => getData()) */
-                .catch(error => { console.error(`Error deleting record with ID ${rec}.`, error); });
+                .catch(error => { console.error(`Error deleting record with ID ${rec.id}.`, error); });
         }
         else {/* Do nothing if the user cancels the deletion */ }
     }
