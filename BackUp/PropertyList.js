@@ -7,7 +7,7 @@ function Property() {
     const [records, setRecords] = useState([])
 
     function getData() {
-        fetch('http://localhost:8000/property')
+        fetch('http://18.202.34.215:8000/property')
             .then((response) => response.json()
                 .then((data) => setRecords(data)))
     }

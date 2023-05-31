@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-let jsonURL = "http://localhost:8000/property";
+let jsonURL = "http://18.202.34.215:8000/property";
 
 function PropertyPage() {
     const [properties, setProperties] = useState([]);
@@ -56,7 +56,7 @@ function PropertyPage() {
 
     const refreshProperties = async () => {
         try {
-            const sellersResponse = await fetch("http://localhost:8080/seller");
+            const sellersResponse = await fetch("http://18.202.34.215:8080/seller");
             const sellers = await sellersResponse.json();
             const sellerIds = sellers.map((seller) => seller.id);
 

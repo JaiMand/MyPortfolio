@@ -3,7 +3,7 @@ const urlAddProperty = '/AddSellerPropertyForm/'
 const [records, setRecords] = useState([])
 
 function getData() {
-    fetch('http://localhost:8000/seller')
+    fetch('http://18.202.34.215:8000/seller')
         .then((response) => {
             if (!response.ok) {
                 alert("An error has occured. unable to read the Sellers");
@@ -35,12 +35,12 @@ function PropertySearch() {
     const buyerName = useRef();
 
     function getData() {
-        fetch('http://localhost:8000/property')
+        fetch('http://18.202.34.215:8000/property')
             .then((response) => response.json())
             .then((data) => {
                 setRecords(data);
             });
-        fetch('http://localhost:8000/buyer')
+        fetch('http://18.202.34.215:8000/buyer')
             .then((response) => response.json()
                 .then((buyerData) => setBuyerRecords(buyerData)))
     }
@@ -48,7 +48,7 @@ function PropertySearch() {
     useEffect(() => { getData() }, [])
 
     function handleSearch() {
-        fetch('http://localhost:8000/property')
+        fetch('http://18.202.34.215:8000/property')
             .then((response) => response.json())
             .then((data) => {
                 // eslint-disable-next-line eqeqeq
@@ -194,7 +194,7 @@ function PropertySearch() {
 
 
     function getData() {
-        fetch('http://localhost:8000/property')
+        fetch('http://18.202.34.215:8000/property')
             .then((response) => response.json())
             .then((data) => {
                 setRecords(data);
@@ -204,7 +204,7 @@ function PropertySearch() {
     useEffect(() => { getData() }, [])
 
     function handleSearch() {
-        fetch('http://localhost:8000/property')
+        fetch('http://18.202.34.215:8000/property')
             .then((response) => response.json())
             .then((data) => {
                 const filteredRecords = data.filter((rec) => rec.bedroom == bedroom);

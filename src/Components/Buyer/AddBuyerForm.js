@@ -44,7 +44,7 @@ export const AddBuyerForm = () => {
             newBuyer.postcode &&
             newBuyer.phone_number
         ) {
-            fetch('http://localhost:8080/buyer/add', {
+            fetch('http://18.202.34.215:8080/buyer/add', {
                 method: "POST",
                 headers: { "content-Type": "application/json" },
                 body: JSON.stringify(newBuyer)
