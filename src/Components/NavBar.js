@@ -1,16 +1,15 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import React from 'react';
-import './navbar.css';
 
 import Home from "./HomePage";
 
-import About from "./About/SellerProperty";
-import Blog from "./Seller/AddSellerForm";
-import Imagine from "./Seller/ManageSellerProperty";
-import Stories from "./Seller/AddSellerPropertyForm";
-import Physics from "./Buyer/BuyerProperty";
-import Shop from "./Buyer/AddBuyerForm";
-import ContactUs from "./Buyer/ManageBuyerBookings";
+import About from "./About/About";
+import Blog from "./Blog/Blog";
+import Imagine from "./Imagine/Imagine";
+import Stories from "./Stories/Stories";
+import Physics from "./PhysicsAndAllThingsMaths/PhysicsAndAllThingsMaths";
+import Shop from "./Shop/Shop";
+import ContactUs from "./ContactUs/ContactUs";
 
 function NavBar() {
 
@@ -26,25 +25,25 @@ function NavBar() {
                             <Link className="nav-link link" to="/">Home.</Link>
                         </li>
                         <li className="link-container">
-                            <Link className="nav-link link" to="/Seller/SellerProperty">About.</Link>
+                            <Link className="nav-link link" to="/About">About.</Link>
                         </li>
                         <li className="link-container">
-                            <Link className="nav-link link" to="/Buyer/BuyerProperty">Blog.</Link>
+                            <Link className="nav-link link" to="/Blog">Blog.</Link>
                         </li>
                         <li className="link-container">
-                            <Link className="nav-link link" to="/Property/PropertySearch">Imagine.</Link>
+                            <Link className="nav-link link" to="/Imagine">Imagine.</Link>
                         </li>
                         <li className="link-container">
-                            <Link className="nav-link link" to="/Property/PropertySearch">Stories.</Link>
+                            <Link className="nav-link link" to="/Stories">Stories.</Link>
                         </li>
                         <li className="link-container">
-                            <Link className="nav-link link" to="/Property/PropertySearch">Physics.</Link>
+                            <Link className="nav-link link" to="/Physics">Physics.</Link>
                         </li>
                         <li className="link-container">
-                            <Link className="nav-link link" to="/Property/PropertySearch">Shop.</Link>
+                            <Link className="nav-link link" to="/Shop">Shop.</Link>
                         </li>
                         <li className="link-container">
-                            <Link className="nav-link link" to="/Property/PropertySearch">Contact Us.</Link>
+                            <Link className="nav-link link" to="/ContactUs">Contact Us.</Link>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
