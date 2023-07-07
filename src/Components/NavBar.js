@@ -7,7 +7,7 @@ import About from "./About/About";
 import Blog from "./Blog/Blog";
 import Imagine from "./Imagine/Imagine";
 import Stories from "./Stories/Stories";
-import Physics from "./PhysicsAndAllThingsMaths/PhysicsAndAllThingsMaths";
+import PhysicsAndAllThingsMaths from "./PhysicsAndAllThingsMaths/PhysicsAndAllThingsMaths";
 import Shop from "./Shop/Shop";
 import ContactUs from "./ContactUs/ContactUs";
 
@@ -47,22 +47,22 @@ function NavBar() {
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li className="link-container"><Link className="glyphicon glyphicon-user nav-link link" to="/HomeProperty"><span></span>Search.</Link></li>
+                        <li className="link-container"><Link className="glyphicon glyphicon-user nav-link link" to="/HomePag"><span></span>Search.</Link></li>
                     </ul>
                 </div>
             </nav>
 
             <Routes>
-                <Route path="/HomeProperty" element={<Home />} />
+                <Route path="/HomePage" element={<Home />} />
                 <Route path="/" element={<Home />} />
 
-                <Route path="/Seller/SellerProperty" element={<About />} />
-                <Route path="/Seller/AddSellerForm" element={<Blog />} />
-                <Route path="/Seller/ManageSellerProperty/:sellerId/:firstName/:surname" element={<Imagine />} />
-                <Route path="/Seller/AddSellerPropertyform/:sellerId/:firstName/:surname" element={<Stories />} />
-                <Route path="/Buyer/BuyerProperty" element={<Physics />} />
-                <Route path="/Buyer/AddBuyerForm" element={<Shop />} />
-                <Route path="/Buyer/ManageBuyerBookings/:buyerId/:firstName/:surname" element={<ContactUs />} />
+                <Route path="/About" element={<About />} />
+                <Route path="/Blog" element={<Blog />} />
+                <Route path="/Imagine" element={<Imagine />} />
+                <Route path="/Stories" element={<Stories />} />
+                <Route path="/PhysicsAndAllThingsMaths" element={<PhysicsAndAllThingsMaths />} />
+                <Route path="/Shop" element={<Shop />} />
+                <Route path="/ContactUs" element={<ContactUs />} />
 
             </Routes>
         </BrowserRouter>
