@@ -47,7 +47,7 @@ function NavBar() {
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li className="link-container"><Link className="glyphicon glyphicon-user nav-link link" to="/HomePag"><span></span>Search.</Link></li>
+                        <li className="link-container"><Link className="glyphicon glyphicon-user nav-link link" to="/HomePage"><span></span>Search.</Link></li>
                     </ul>
                 </div>
             </nav>
